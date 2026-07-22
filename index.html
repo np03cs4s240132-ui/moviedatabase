@@ -1,13 +1,103 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>moviereview</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>moviereview</h1>
+  <p>Your personal movie review database</p>
+</header>
+
+<main>
+
+  <section id="form-section">
+    <h2 id="form-title">Add New Review</h2>
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label for="inp-title">Movie Title</label>
+        <input id="inp-title" type="text" placeholder="e.g. Inception" maxlength="120" />
+      </div>
+
+      <div class="field">
+        <label for="inp-director">Director</label>
+        <input id="inp-director" type="text" placeholder="e.g. Christopher Nolan" maxlength="100" />
+      </div>
+
+      <div class="field">
+        <label for="inp-date">Release Date</label>
+        <input id="inp-date" type="date" />
+      </div>
+
+      <div class="field">
+        <label>Rating (0 – 5)</label>
+        <div class="star-row" id="star-row"></div>
+        <input type="hidden" id="inp-rating" value="0" />
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-save" onclick="submitForm()">Save Review</button>
+      <button type="button" class="btn-cancel" onclick="cancelEdit()" id="cancel-btn" style="display:none">Cancel</button>
+    </div>
+  </section>
+
+  <section id="reviews-section">
+    <div class="toolbar">
+      <h2>All Reviews</h2>
+      <div class="sort-group">
+        <span class="muted">Sort by</span>
+        <select id="sort-field" onchange="renderTable()">
+          <option value="title">Title</option>
+          <option value="rating">Rating</option>
+          <option value="director">Director</option>
+          <option value="releaseDate">Release Date</option>
+        </select>
+        <select id="sort-dir" onchange="renderTable()">
+          <option value="asc">Asc</option>
+          <option value="desc">Desc</option>
+        </select>
+      </div>
+      <span id="count-badge" class="count-badge">0 reviews</span>
+    </div>
+
+    <div id="loading"><span class="spinner"></span> Loading reviews...</div>
+
+    <div class="table-wrap" id="table-wrap">
+      <table id="reviews-table">
+        <thead>
+          <tr>
+            <th>Movie Title</th>
+            <th>Director</th>
+            <th>Release Date</th>
+            <th>Rating</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+      <div class="empty-state" id="empty-state" style="display:none;">
+        <p>No reviews yet. Add your first one above!</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="toast"></div>
+
+<script src="script.js"></script>
+</body>
 </html>
