@@ -1,0 +1,5 @@
+$kind: collection
+name: Movie API
+variables:
+  - key: baseUrl
+    value: 'http://localhost:5000'

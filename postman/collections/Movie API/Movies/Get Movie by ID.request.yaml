@@ -1,0 +1,9 @@
+$kind: http-request
+name: Get Movie by ID
+method: GET
+url: '{{baseUrl}}/api/movies/:id'
+order: 2000
+description: Fetch a single movie by its MongoDB ObjectId
+pathVariables:
+  - key: id
+    value: '{{movieId}}'

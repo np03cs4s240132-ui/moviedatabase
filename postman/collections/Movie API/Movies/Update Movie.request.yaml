@@ -1,0 +1,21 @@
+$kind: http-request
+name: Update Movie
+method: PUT
+url: http://localhost:5000/api/movies/6a659c53b75aea9b3edfe105
+order: 4000
+description: Update an existing movie by ID
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Inception",
+      "genre": "Sci-Fi",
+      "year": 2010,
+      "director": "Christopher Nolan",
+      "synopsis": "Crazy shi",
+      "cast": ["Leonardo DiCaprio"],
+      "poster": "",
+      "avgRating": 8.8
+    }

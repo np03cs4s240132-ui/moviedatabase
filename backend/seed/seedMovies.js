@@ -1,4 +1,4 @@
-const Movie = require("../models/Movie");
+import Movie from "../models/Movie.js";
 
 const sampleMovies = [
   {
@@ -67,4 +67,4 @@ const seedMovies = async () => {
   }
 };
 
-module.exports = seedMovies;
+export default seedMovies;

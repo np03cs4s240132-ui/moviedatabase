@@ -1,0 +1,19 @@
+$kind: http-request
+name: Get All Movies
+method: GET
+url: '{{baseUrl}}/api/movies'
+order: 1000
+description: 'Fetch all movies. Supports optional query params: search, genre, year'
+queryParams:
+  - key: search
+    value: ''
+    description: Search movies by title
+    disabled: true
+  - key: genre
+    value: ''
+    description: Filter by genre
+    disabled: true
+  - key: year
+    value: ''
+    description: Filter by year
+    disabled: true

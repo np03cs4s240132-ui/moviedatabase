@@ -1,0 +1,22 @@
+$kind: http-request
+name: Add Movie
+method: POST
+url: '{{baseUrl}}/api/movies'
+order: 3000
+description: Create a new movie
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Inception",
+      "genre": "Sci-Fi",
+      "year": 2010,
+      "director": "Christopher Nolan",
+      "synopsis": "A thief who steals corporate secrets through dream-sharing technology.",
+      "cast": ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page"],
+      "poster": "",
+      "avgRating": 0
+    }
