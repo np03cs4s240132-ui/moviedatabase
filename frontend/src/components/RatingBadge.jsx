@@ -1,18 +1,18 @@
 function RatingBadge({ rating }) {
-  const score = Number(rating) || 0;
+  const numericRating = Number(rating) || 0;
 
-  let colorClass = "bg-red-500";
-  if (score >= 8) {
-    colorClass = "bg-green-500";
-  } else if (score >= 5) {
-    colorClass = "bg-amber-500";
-  }
+  const colorClasses =
+    numericRating >= 8
+      ? "bg-green-100 text-green-800"
+      : numericRating >= 5
+      ? "bg-amber-100 text-amber-800"
+      : "bg-red-100 text-red-800";
 
   return (
     <span
-      className={`inline-block rounded-full px-2.5 py-1 text-xs font-semibold text-white ${colorClass}`}
+      className={`inline-flex shrink-0 items-center rounded-full px-2.5 py-1 text-xs font-semibold ${colorClasses}`}
     >
-      {score.toFixed(1)}
+      ⭐ {numericRating.toFixed(1)}
     </span>
   );
 }

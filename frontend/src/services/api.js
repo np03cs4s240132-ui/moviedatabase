@@ -4,6 +4,7 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 const api = axios.create({
   baseURL: API_URL,
+  withCredentials: true, // sends/receives cookies automatically
 });
 
 export const fetchMovies = async (params = {}) => {
@@ -24,6 +25,25 @@ export const createMovie = async (movie) => {
 export const deleteMovie = async (id) => {
   const { data } = await api.delete(`/movies/${id}`);
   return data;
+};
+
+export const registerUser = async (userData) => {
+  const { data } = await api.post("/auth/register", userData);
+  return data.data;
+};
+
+export const loginUser = async (credentials) => {
+  const { data } = await api.post("/auth/login", credentials);
+  return data.data;
+};
+
+export const logoutUser = async () => {
+  await api.post("/auth/logout");
+};
+
+export const getCurrentUser = async () => {
+  const { data } = await api.get("/auth/me");
+  return data.data;
 };
 
 export default api;

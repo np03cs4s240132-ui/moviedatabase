@@ -5,6 +5,8 @@ import MovieGrid from "./components/MovieGrid";
 import MovieDetail from "./components/MovieDetail";
 import Dashboard from "./components/Dashboard";
 import SearchBar from "./components/SearchBar";
+import Login from "./components/Login";
+import Register from "./components/Register";
 import { createMovie, fetchMovies } from "./services/api";
 
 function App() {
@@ -123,6 +125,20 @@ function App() {
 
         {activeView === "add" && (
           <AddMovieForm onAddMovie={handleAddMovie} />
+        )}
+
+        {activeView === "login" && (
+          <Login
+            onSuccess={() => setActiveView("browse")}
+            onSwitchToRegister={() => setActiveView("register")}
+          />
+        )}
+
+        {activeView === "register" && (
+          <Register
+            onSuccess={() => setActiveView("browse")}
+            onSwitchToLogin={() => setActiveView("login")}
+          />
         )}
 
         {activeView === "browse" && selectedMovie && (

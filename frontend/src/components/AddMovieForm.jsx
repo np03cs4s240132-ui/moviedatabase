@@ -6,12 +6,13 @@ function AddMovieForm({ onAddMovie }) {
   const [year, setYear] = useState("");
   const [director, setDirector] = useState("");
   const [synopsis, setSynopsis] = useState("");
+  const [rating, setRating] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || !genre || !year || !director || !synopsis) {
+    if (!title || !genre || !year || !director || !synopsis || rating === "") {
       alert("Please fill in all fields.");
       return;
     }
@@ -24,6 +25,7 @@ function AddMovieForm({ onAddMovie }) {
         year: Number(year),
         director,
         synopsis,
+        avgRating: Number(rating),
       });
 
       setTitle("");
@@ -31,6 +33,7 @@ function AddMovieForm({ onAddMovie }) {
       setYear("");
       setDirector("");
       setSynopsis("");
+      setRating("");
     } finally {
       setSubmitting(false);
     }
@@ -74,6 +77,17 @@ function AddMovieForm({ onAddMovie }) {
         placeholder="Director"
         value={director}
         onChange={(e) => setDirector(e.target.value)}
+        className="rounded-md border border-gray-300 px-3 py-2 outline-none focus:border-blue-500"
+      />
+
+      <input
+        type="number"
+        step="0.1"
+        min="0"
+        max="10"
+        placeholder="Rating (0-10)"
+        value={rating}
+        onChange={(e) => setRating(e.target.value)}
         className="rounded-md border border-gray-300 px-3 py-2 outline-none focus:border-blue-500"
       />
 
