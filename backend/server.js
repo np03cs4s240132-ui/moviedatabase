@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+
 import connectDB from "./config/db.js";
 import movieRoutes from "./routes/movieRoutes.js";
 import seedMovies from "./seed/seedMovies.js";
@@ -13,17 +14,24 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Allowed frontend origins
+// ==========================================
+// ALLOWED FRONTEND ORIGINS
+// ==========================================
+
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
   "https://moviedatabase-cxq9.onrender.com",
 ];
 
+// ==========================================
+// CORS
+// ==========================================
+
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (Postman, mobile apps, etc.)
+      // Allow Postman, server-to-server requests, etc.
       if (!origin) {
         return callback(null, true);
       }
@@ -32,34 +40,82 @@ app.use(
         return callback(null, true);
       }
 
-      return callback(new Error("The request is not allowed by CORS policy"));
+      console.log("Blocked CORS origin:", origin);
+
+      return callback(
+        new Error(`CORS blocked origin: ${origin}`)
+      );
     },
+
     credentials: true,
+
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+    ],
   })
 );
 
+// ==========================================
+// MIDDLEWARE
+// ==========================================
+
 app.use(express.json());
+
+app.use(cookieParser());
+
+// ==========================================
+// HEALTH CHECK
+// ==========================================
+
 app.get("/api/health", (req, res) => {
-  res.json({ message: "API is healthy" });
+  res.json({
+    message: "API is healthy",
+  });
 });
-// Test route
+
+// ==========================================
+// HOME / TEST ROUTE
+// ==========================================
+
 app.get("/", (req, res) => {
-  res.json({ message: "Movie Database API is running" });
+  res.json({
+    message: "Movie Database API is running",
+  });
 });
+
+// ==========================================
+// AUTH ROUTES
+// ==========================================
 
 app.use("/api/auth", authRoutes);
-// Movie routes
+
+// ==========================================
+// MOVIE ROUTES
+// ==========================================
+
 app.use("/api/movies", movieRoutes);
+
+// ==========================================
+// AI ROUTES
+// ==========================================
+
 app.use("/api/ai", aiRoutes);
 
-// Start server
+// ==========================================
+// START SERVER
+// ==========================================
+
 const startServer = async () => {
   try {
     await connectDB();
+
     await seedMovies();
 
-    app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server running on port ${PORT}`);
     });
   } catch (error) {
     console.error("Failed to start server:", error);
