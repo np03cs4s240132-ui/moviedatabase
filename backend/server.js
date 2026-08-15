@@ -16,21 +16,25 @@ const PORT = process.env.PORT || 5000;
 // Allowed frontend origins
 const allowedOrigins = [
   "http://localhost:5173",
-  process.env.FRONTEND_URL,
-].filter(Boolean);
-
-// Middleware
-app.use(cookieParser());
+  "http://localhost:3000",
+  "https://moviedatabase-cxq9.onrender.com",
+];
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+    origin: function (origin, callback) {
+      // Allow requests with no origin (Postman, mobile apps, etc.)
+      if (!origin) {
         return callback(null, true);
       }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
       return callback(new Error("The request is not allowed by CORS policy"));
     },
-    credentials: true, // lowercase 'c'
+    credentials: true,
   })
 );
 
