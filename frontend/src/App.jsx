@@ -8,6 +8,7 @@ import SearchBar from "./components/SearchBar";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { createMovie, fetchMovies } from "./services/api";
+import Chatbot from "./components/Chatbot";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -180,6 +181,7 @@ function App() {
           </>
         )}
       </main>
+      <Chatbot />
     </div>
   );
 }

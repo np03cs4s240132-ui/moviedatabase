@@ -6,6 +6,7 @@ import connectDB from "./config/db.js";
 import movieRoutes from "./routes/movieRoutes.js";
 import seedMovies from "./seed/seedMovies.js";
 import authRoutes from "./routes/authRoutes.js";
+import aiRoutes from "./routes/aiRoutes.js";
 
 dotenv.config();
 
@@ -45,6 +46,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 // Movie routes
 app.use("/api/movies", movieRoutes);
+app.use("/api/ai", aiRoutes);
 
 // Start server
 const startServer = async () => {

@@ -46,4 +46,12 @@ export const getCurrentUser = async () => {
   return data.data;
 };
 
+export const askAI = async (message) => {
+  const { data } = await api.post("/ai/chat", {
+    message,
+  });
+
+  return data.data.reply;
+};
+
 export default api;
